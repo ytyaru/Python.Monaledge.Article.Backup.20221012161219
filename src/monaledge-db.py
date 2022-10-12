@@ -49,6 +49,10 @@ class MonaledgeDb(Db):
         print('--- update ---')
         self.exec("update articles set created=?, updated=?, title=?, sent_mona=?, access=?, ogp_path=?, category_id=? content=? where id = ?;", (article['createdAt'], article['updatedAt'], article['title'], article['sent_mona'], article['access'], article['ogp_path'], article['category'], content, article['id']))
         self.upsert_comments(article['comments'])
+    def update_article_content(self, article, content):
+        print('--- update-content ---')
+        self.exec("update articles set updated=?, content=? where id = ?;", (article['updatedAt'], content, article['id']))
+        self.upsert_comments(article['comments'])
     def update_article_header(self, article, content=None):
         print('--- update-header ---')
         self.exec("update articles set updated=?, sent_mona=?, access=?, ogp_path=?, category_id=? where id = ?;", (article['updatedAt'], article['sent_mona'], article['access'], article['ogp_path'], article['category'], article['id']))
